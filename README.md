@@ -1,34 +1,44 @@
 # Mueblería CrediCauca S.A.S.
 
-Proyecto desarrollado para la evidencia
-GA7-220501096-AA2-EV01.
+## Proyecto
 
-Módulo desarrollado:
-Gestión de Productos.
+Sistema de gestión de productos para Mueblería CrediCauca S.A.S.
 
-Funcionalidades:
+## Módulo desarrollado
 
-- Registrar productos.
-- Consultar productos.
-- Buscar productos.
-- Editar productos.
-- Eliminar productos.
+Gestión de Productos
 
-Tecnologías:
+## Funcionalidades
+
+- Registrar productos
+- Consultar productos
+- Buscar productos
+- Actualizar productos
+- Eliminar productos
+- Cargar imágenes
+
+## Tecnologías utilizadas
 
 - PHP
 - MySQL
-- HTML
-- CSS
+- HTML5
+- CSS3
+- Bootstrap 5
 - XAMPP
 - Git
+- GitHub
 
 ## Base de datos
 
-Nombre de la base de datos:
-
+Nombre:
 muebles_credicauca
 
 Tabla principal:
-
 productos
+
+## Integrantes
+
+- Jesús Eliezer Vargas Colmenares
+- Fabián Ricardo Díaz Mage
+- Santiago David Silva Viloria
+- Jorge Antonio Barrera Mogollón
