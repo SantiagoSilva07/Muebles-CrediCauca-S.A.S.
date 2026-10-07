@@ -181,64 +181,30 @@ $modoEdicion = ($productoEditar !== null);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Mueblería CrediCauca S.A.S.</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: Arial, Helvetica, sans-serif; background: #f4f1ec; margin: 0; color: #333; }
-        header { background: #5a3825; color: #fff; padding: 18px 30px; }
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 4px 0 0; font-size: 14px; opacity: .85; }
-        .contenedor { max-width: 1150px; margin: 25px auto; padding: 0 15px; }
-        .tarjeta { background: #fff; border-radius: 8px; padding: 22px; margin-bottom: 25px; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
-        .tarjeta h2 { margin-top: 0; color: #5a3825; border-bottom: 2px solid #e6dccf; padding-bottom: 8px; }
-        .mensaje { padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-weight: bold; }
-        .mensaje.exito { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .mensaje.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .grid .completo { grid-column: 1 / -1; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
-        input[type=text], input[type=number], input[type=file], textarea {
-            width: 100%; padding: 9px; border: 1px solid #bbb; border-radius: 5px; font-size: 14px; font-family: inherit;
-        }
-        textarea { resize: vertical; min-height: 80px; }
-        .btn { display: inline-block; padding: 9px 18px; border: none; border-radius: 5px; cursor: pointer;
-               font-size: 14px; text-decoration: none; color: #fff; }
-        .btn-guardar { background: #2e7d32; }
-        .btn-cancelar { background: #757575; }
-        .btn-editar { background: #1565c0; padding: 6px 12px; }
-        .btn-eliminar { background: #c62828; padding: 6px 12px; }
-        .btn-buscar { background: #5a3825; }
-        .btn:hover { opacity: .88; }
-        .barra-busqueda { display: flex; gap: 8px; margin-bottom: 15px; }
-        .barra-busqueda input { flex: 1; }
-        .tabla-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { background: #5a3825; color: #fff; padding: 10px; text-align: left; }
-        td { padding: 9px 10px; border-bottom: 1px solid #e2e2e2; vertical-align: middle; }
-        tr:hover td { background: #faf6f0; }
-        td img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd; }
-        .sin-imagen { color: #999; font-size: 12px; }
-        .vacio { text-align: center; padding: 25px; color: #777; }
-        .imagen-actual { margin-top: 8px; }
-        .imagen-actual img { width: 90px; border-radius: 5px; border: 1px solid #ddd; }
-        @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
-    </style>
+    <!-- Bootstrap 5.3.3 (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
 
-<header>
-    <h1>Mueblería CrediCauca S.A.S.</h1>
-    <p>Módulo de gestión de productos</p>
+<header class="bg-dark text-white py-3 mb-4">
+    <div class="container">
+        <h1 class="h3 mb-0">Mueblería CrediCauca S.A.S.</h1>
+        <p class="mb-0 small opacity-75">Módulo de gestión de productos</p>
+    </div>
 </header>
 
-<div class="contenedor">
+<div class="container my-4">
 
     <?php if ($mensaje !== ''): ?>
-        <div class="mensaje <?php echo e($tipoMsg); ?>"><?php echo e($mensaje); ?></div>
+        <div class="alert alert-<?php echo ($tipoMsg === 'exito') ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
+            <?php echo e($mensaje); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
     <?php endif; ?>
 
     <!-- FORMULARIO CREAR / ACTUALIZAR (POST) -->
-    <div class="tarjeta">
-        <h2><?php echo $modoEdicion ? "Editar producto #" . e($productoEditar['id_producto']) : "Registrar nuevo producto"; ?></h2>
+    <div class="card card-body shadow-sm mb-4">
+        <h2 class="h5 text-dark border-bottom pb-2 mb-3"><?php echo $modoEdicion ? "Editar producto #" . e($productoEditar['id_producto']) : "Registrar nuevo producto"; ?></h2>
 
         <form action="productos.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="accion" value="<?php echo $modoEdicion ? 'actualizar' : 'crear'; ?>">
@@ -246,73 +212,72 @@ $modoEdicion = ($productoEditar !== null);
                 <input type="hidden" name="id_producto" value="<?php echo (int)$productoEditar['id_producto']; ?>">
             <?php endif; ?>
 
-            <div class="grid">
-                <div>
-                    <label for="nombre">Nombre *</label>
-                    <input type="text" id="nombre" name="nombre" maxlength="100" required
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="nombre">Nombre *</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100" required
                            value="<?php echo $modoEdicion ? e($productoEditar['nombre']) : ''; ?>">
                 </div>
-                <div>
-                    <label for="categoria">Categoría</label>
-                    <input type="text" id="categoria" name="categoria" maxlength="100"
+                <div class="col-md-6">
+                    <label class="form-label" for="categoria">Categoría</label>
+                    <input type="text" class="form-control" id="categoria" name="categoria" maxlength="100"
                            value="<?php echo $modoEdicion ? e($productoEditar['categoria']) : ''; ?>">
                 </div>
-                <div>
-                    <label for="precio">Precio *</label>
-                    <input type="number" id="precio" name="precio" step="0.01" min="0" required
+                <div class="col-md-6">
+                    <label class="form-label" for="precio">Precio *</label>
+                    <input type="number" class="form-control" id="precio" name="precio" step="0.01" min="0" required
                            value="<?php echo $modoEdicion ? e($productoEditar['precio']) : ''; ?>">
                 </div>
-                <div>
-                    <label for="stock">Stock *</label>
-                    <input type="number" id="stock" name="stock" min="0" step="1" required
+                <div class="col-md-6">
+                    <label class="form-label" for="stock">Stock *</label>
+                    <input type="number" class="form-control" id="stock" name="stock" min="0" step="1" required
                            value="<?php echo $modoEdicion ? e($productoEditar['stock']) : ''; ?>">
                 </div>
-                <div class="completo">
-                    <label for="descripcion">Descripción</label>
-                    <textarea id="descripcion" name="descripcion"><?php echo $modoEdicion ? e($productoEditar['descripcion']) : ''; ?></textarea>
+                <div class="col-12">
+                    <label class="form-label" for="descripcion">Descripción</label>
+                    <textarea class="form-control" rows="3" id="descripcion" name="descripcion"><?php echo $modoEdicion ? e($productoEditar['descripcion']) : ''; ?></textarea>
                 </div>
-                <div>
-                    <label for="imagen_archivo">Subir imagen (jpg, png, gif, webp)</label>
-                    <input type="file" id="imagen_archivo" name="imagen_archivo" accept="image/*">
+                <div class="col-md-6">
+                    <label class="form-label" for="imagen_archivo">Subir imagen (jpg, png, gif, webp)</label>
+                    <input type="file" class="form-control" id="imagen_archivo" name="imagen_archivo" accept="image/*">
                 </div>
-                <div>
-                    <label for="imagen">o ruta / URL de la imagen</label>
-                    <input type="text" id="imagen" name="imagen" maxlength="255" placeholder="uploads/mesa.jpg"
+                <div class="col-md-6">
+                    <label class="form-label" for="imagen">o ruta / URL de la imagen</label>
+                    <input type="text" class="form-control" id="imagen" name="imagen" maxlength="255" placeholder="uploads/mesa.jpg"
                            value="<?php echo $modoEdicion ? e($productoEditar['imagen']) : ''; ?>">
                     <?php if ($modoEdicion && !empty($productoEditar['imagen'])): ?>
-                        <div class="imagen-actual">
-                            <img src="<?php echo e($productoEditar['imagen']); ?>" alt="Imagen actual">
+                        <div class="mt-2">
+                            <img src="<?php echo e($productoEditar['imagen']); ?>" alt="Imagen actual" class="img-thumbnail" style="width:90px;">
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
 
-            <br>
-            <button type="submit" class="btn btn-guardar">
+            <button type="submit" class="btn btn-success mt-3">
                 <?php echo $modoEdicion ? "Actualizar producto" : "Guardar producto"; ?>
             </button>
             <?php if ($modoEdicion): ?>
-                <a href="productos.php" class="btn btn-cancelar">Cancelar</a>
+                <a href="productos.php" class="btn btn-secondary mt-3">Cancelar</a>
             <?php endif; ?>
         </form>
     </div>
 
     <!-- LISTADO / CONSULTA (GET) -->
-    <div class="tarjeta">
-        <h2>Listado de productos</h2>
+    <div class="card card-body shadow-sm mb-4">
+        <h2 class="h5 text-dark border-bottom pb-2 mb-3">Listado de productos</h2>
 
-        <form action="productos.php" method="GET" class="barra-busqueda">
-            <input type="text" name="buscar" placeholder="Buscar por nombre, categoría o descripción..."
+        <form action="productos.php" method="GET" class="input-group mb-3">
+            <input type="text" class="form-control" name="buscar" placeholder="Buscar por nombre, categoría o descripción..."
                    value="<?php echo e($buscar); ?>">
-            <button type="submit" class="btn btn-buscar">Buscar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
             <?php if ($buscar !== ''): ?>
-                <a href="productos.php" class="btn btn-cancelar">Limpiar</a>
+                <a href="productos.php" class="btn btn-secondary">Limpiar</a>
             <?php endif; ?>
         </form>
 
-        <div class="tabla-wrap">
-            <table>
-                <thead>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Imagen</th>
@@ -331,9 +296,9 @@ $modoEdicion = ($productoEditar !== null);
                             <td><?php echo (int)$fila['id_producto']; ?></td>
                             <td>
                                 <?php if (!empty($fila['imagen'])): ?>
-                                    <img src="<?php echo e($fila['imagen']); ?>" alt="<?php echo e($fila['nombre']); ?>">
+                                    <img src="<?php echo e($fila['imagen']); ?>" alt="<?php echo e($fila['nombre']); ?>" class="img-thumbnail" style="width:60px;height:60px;object-fit:cover;">
                                 <?php else: ?>
-                                    <span class="sin-imagen">Sin imagen</span>
+                                    <span class="text-muted small">Sin imagen</span>
                                 <?php endif; ?>
                             </td>
                             <td><?php echo e($fila['nombre']); ?></td>
@@ -341,16 +306,16 @@ $modoEdicion = ($productoEditar !== null);
                             <td><?php echo e($fila['descripcion']); ?></td>
                             <td>$<?php echo number_format((float)$fila['precio'], 2, ',', '.'); ?></td>
                             <td><?php echo (int)$fila['stock']; ?></td>
-                            <td>
-                                <a class="btn btn-editar" href="productos.php?editar=<?php echo (int)$fila['id_producto']; ?>">Editar</a>
-                                <a class="btn btn-eliminar"
+                            <td class="text-nowrap">
+                                <a class="btn btn-primary btn-sm" href="productos.php?editar=<?php echo (int)$fila['id_producto']; ?>">Editar</a>
+                                <a class="btn btn-danger btn-sm"
                                    href="productos.php?eliminar=<?php echo (int)$fila['id_producto']; ?>"
                                    onclick="return confirm('¿Seguro que desea eliminar este producto?');">Eliminar</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <tr><td colspan="8" class="vacio">No hay productos para mostrar.</td></tr>
+                    <tr><td colspan="8" class="text-center text-muted py-4">No hay productos para mostrar.</td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -359,6 +324,8 @@ $modoEdicion = ($productoEditar !== null);
 
 </div>
 
+<!-- Bootstrap 5.3.3 JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 <?php
