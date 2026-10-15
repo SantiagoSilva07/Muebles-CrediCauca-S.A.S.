@@ -1,9 +1,19 @@
 <?php
 /**
- * GA7-220501096-AA2-EV01 - Codificación de módulos del software
  * Proyecto: Mueblería CrediCauca S.A.S.
- * Módulo: CRUD de productos (PHP + MySQLi + MySQL, XAMPP)
- * Base de datos: muebles_credicauca | Tabla: productos
+ * Sistema web para la gestión de productos.
+ *
+ * Módulo: Gestión de productos (CRUD)
+ * Tecnologías: PHP, MySQL/MariaDB, MySQLi y Bootstrap 5
+ * Base de datos: muebles_credicauca
+ * Tabla principal: productos
+ *
+ * Funcionalidades:
+ * - Registrar productos.
+ * - Consultar y buscar productos.
+ * - Actualizar productos.
+ * - Eliminar productos.
+ * - Gestionar imágenes.
  */
 
 // ---------------------------------------------------------------
