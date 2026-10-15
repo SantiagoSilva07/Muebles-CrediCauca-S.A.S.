@@ -5,7 +5,6 @@ include("../backend/config/conexion.php");
 /*
 API Productos
 Proyecto: Mueblería CrediCauca S.A.S.
-Evidencia: AA5-EV03
 */
 
 header("Content-Type: application/json");
